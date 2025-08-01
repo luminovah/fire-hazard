@@ -1,16 +1,32 @@
 {
-  "type": "module",
+  "name": "earth-engine-nextjs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test-original": "node gee.js"
+  },
   "dependencies": {
     "@google/earthengine": "^1.6.1",
     "google-auth-library": "^10.2.0",
+    "next": "15.4.5",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
     "node-fetch": "^3.3.2"
   },
-  "name": "gridline-vegetation-density",
-  "version": "1.0.0",
-  "main": "gee.js",
-  "devDependencies": {},
-  "scripts": {
-    "test": "node gee.js"
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.4.5",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   },
   "repository": {
     "type": "git",
@@ -22,5 +38,5 @@
     "url": "https://github.com/AdelBeit/fire-hazards/issues"
   },
   "homepage": "https://github.com/AdelBeit/fire-hazards#readme",
-  "description": ""
+  "description": "Earth Engine vegetation analysis with Next.js"
 }
