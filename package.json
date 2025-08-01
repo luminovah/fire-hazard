@@ -1,0 +1,26 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@google/earthengine": "^1.6.1",
+    "google-auth-library": "^10.2.0",
+    "node-fetch": "^3.3.2"
+  },
+  "name": "gridline-vegetation-density",
+  "version": "1.0.0",
+  "main": "gee.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "node gee.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdelBeit/fire-hazards.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AdelBeit/fire-hazards/issues"
+  },
+  "homepage": "https://github.com/AdelBeit/fire-hazards#readme",
+  "description": ""
+}
