@@ -1,31 +1,66 @@
+function generatePairBoundingBoxes(coords) {
+    const boxes = [];
+
+    for (let i = 0; i < coords.length - 1; i++) {
+        const p1 = coords[i];
+        const p2 = coords[i + 1];
+
+        const minLat = Math.min(p1.lat, p2.lat);
+        const maxLat = Math.max(p1.lat, p2.lat);
+        const minLon = Math.min(p1.lon, p2.lon);
+        const maxLon = Math.max(p1.lon, p2.lon);
+
+        boxes.push({ minLat, maxLat, minLon, maxLon });
+    }
+
+    return boxes;
+}
 const geolib = require('geolib');
 
-function createBoundingBox(lat1, lon1, lat2, lon2, widthFt = 300) {
-    const widthM = widthFt * 0.3048;
-    const halfWidth = widthM / 2;
+function subdivideBoxInto1mCells(box) {
+    const cellSizeM = 1;
+    const points = [];
 
-    const point1 = { latitude: lat1, longitude: lon1 };
-    const point2 = { latitude: lat2, longitude: lon2 };
+    let currentLat = box.minLat;
 
-    // Calculate bearing from point1 to point2
-    const bearing = geolib.getRhumbLineBearing(point1, point2);
+    while (currentLat < box.maxLat) {
+        let currentLon = box.minLon;
 
-    // Perpendicular bearings
-    const perp1 = (bearing + 90) % 360;
-    const perp2 = (bearing + 270) % 360; // equivalent to -90 mod 360
+        while (currentLon < box.maxLon) {
+            const center = geolib.computeDestinationPoint(
+                geolib.computeDestinationPoint(
+                    { latitude: currentLat, longitude: currentLon },
+                    cellSizeM / 2,
+                    0 // north
+                ),
+                cellSizeM / 2,
+                90 // east
+            );
 
-    // Offset points
-    const p1Left = geolib.computeDestinationPoint(point1, halfWidth, perp1);
-    const p1Right = geolib.computeDestinationPoint(point1, halfWidth, perp2);
-    const p2Left = geolib.computeDestinationPoint(point2, halfWidth, perp1);
-    const p2Right = geolib.computeDestinationPoint(point2, halfWidth, perp2);
+            points.push({ lat: center.latitude, lon: center.longitude });
 
-    // Return rectangle as array of coordinates (closed polygon)
-    return [
-        { lat: p1Left.latitude, lon: p1Left.longitude },
-        { lat: p2Left.latitude, lon: p2Left.longitude },
-        { lat: p2Right.latitude, lon: p2Right.longitude },
-        { lat: p1Right.latitude, lon: p1Right.longitude },
-        { lat: p1Left.latitude, lon: p1Left.longitude } // Close the polygon
-    ];
+            // Move east by 1 meter
+            const nextLonPoint = geolib.computeDestinationPoint(
+                { latitude: currentLat, longitude: currentLon },
+                cellSizeM,
+                90
+            );
+            currentLon = nextLonPoint.longitude;
+        }
+
+        // Move north by 1 meter
+        const nextLatPoint = geolib.computeDestinationPoint(
+            { latitude: currentLat, longitude: box.minLon },
+            cellSizeM,
+            0
+        );
+        currentLat = nextLatPoint.latitude;
+    }
+
+    return points;
+}
+function generateSubdividedGrid(coords) {
+    const boxes = generatePairBoundingBoxes(coords);
+    const grid = boxes.map(box => subdivideBoxInto1mCells(box));
+    return grid;
 }
