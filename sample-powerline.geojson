@@ -1,0 +1,28 @@
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-turbo",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2025-08-01T18:28:32Z",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/5840180",
+        "cables": "3",
+        "power": "line",
+        "voltage": "115000",
+        "wires": "single"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-121.0372965, 47.7828477],
+          [-121.0398177, 47.7818305],
+          [-121.0409161, 47.781394],
+          [-121.0432207, 47.7804638],
+          [-121.0454928, 47.7802749]
+        ]
+      }
+    }
+  ]
+}

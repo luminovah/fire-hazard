@@ -1,3 +1,5 @@
+import geolib from 'geolib';
+
 function generatePairBoundingBoxes(coords) {
     const boxes = [];
 
@@ -15,10 +17,9 @@ function generatePairBoundingBoxes(coords) {
 
     return boxes;
 }
-import geolib from 'geolib';
 
-function subdivideBoxInto1mCells(box) {
-    const cellSizeM = 1;
+function subdivideBoxInto100mCells(box) {
+    const cellSizeM = 100;
     const points = [];
 
     let currentLat = box.minLat;
@@ -59,9 +60,10 @@ function subdivideBoxInto1mCells(box) {
 
     return points;
 }
+
 function generateSubdividedGrid(coords) {
     const boxes = generatePairBoundingBoxes(coords);
-    const grid = boxes.map(box => subdivideBoxInto1mCells(box));
+    const grid = boxes.map(box => subdivideBoxInto100mCells(box));
     return grid;
 }
 
