@@ -223,12 +223,15 @@ export async function generateThumbnailUrl(
 
   const image = collection.first().select(translatedBands);
 
-  // Generate thumbnail URL
+  // Generate thumbnail URL with proper RGB visualization
   const thumbnail = await new Promise<string>((resolve, reject) => {
     image.getThumbURL({
       region: region,
       dimensions: 512,
-      format: 'png'
+      format: 'png',
+      min: 0,
+      max: 3000,
+      gamma: 1.4
     }, (url: string, err: any) => {
       if (err) reject(err);
       else resolve(url);
@@ -258,12 +261,15 @@ export async function generateThumbnailUrlByRegion(
 
   const image = collection.first().select(translatedBands);
 
-  // Generate thumbnail URL
+  // Generate thumbnail URL with proper RGB visualization
   const thumbnail = await new Promise<string>((resolve, reject) => {
     image.getThumbURL({
       region: region,
       dimensions: 512,
-      format: 'png'
+      format: 'png',
+      min: 0,
+      max: 3000,
+      gamma: 1.4
     }, (url: string, err: any) => {
       if (err) reject(err);
       else resolve(url);
