@@ -1,6 +1,7 @@
 {
   "name": "earth-engine-nextjs",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "type": "module",
   "scripts": {
@@ -13,6 +14,7 @@
   "dependencies": {
     "@google/earthengine": "^1.6.1",
     "geolib": "^3.3.4",
+    "@google/generative-ai": "^0.24.1",
     "google-auth-library": "^10.2.0",
     "next": "15.4.5",
     "node-fetch": "^3.3.2",
